@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { emailReg, passwordReg } from "../../regex";
 
 const initialState = {
   name: "",
@@ -30,15 +31,18 @@ const Register = () => {
     } = state;
     setSuccessMsg("");
     setErrorMsg("");
+
     if (name && email && password) {
-      console.log("If calling....");
-      setSuccessMsg("Successfully registed!!");
-      setTimeout(() => {
-        setSuccessMsg("");
-        setState(initialState);
-      }, 2000);
+      if (email.match(emailReg) && password.match(passwordReg)) {
+        setSuccessMsg("Successfully registed!!");
+        setTimeout(() => {
+          setSuccessMsg("");
+          setState(initialState);
+        }, 2000);
+        return;
+      }
+      setErrorMsg("Invalid email");
     } else {
-      console.log("Else calling....");
       setErrorMsg("All fields are required...");
     }
   }
